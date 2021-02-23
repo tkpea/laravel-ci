@@ -3,6 +3,22 @@ jobs:
   build:
     docker:
       - image: circleci/php:7.3-node-browsers
+      # DBのImageを追加
+      - image: circleci/postgres:11.6-alpine
+        # DBの環境変数
+        enviroment:
+          POSTGRES_DB: larasns
+          POSTGRES_USER: default
+          POSTGRES_PASSWORD: secret
+      enviroment: 
+        # アプリの環境変数
+        APP_ENV: testing
+        DB_CONNECTION: pgsql
+        DB_HOST: localhost
+        DB_PORT: 5432
+        DB_DATABASE: larasns
+        DB_USERNAME: default
+        DB_PASSWORD: secret
     steps:
       - checkout
       - run: sudo composer self-update --1
@@ -28,6 +44,14 @@ jobs:
           paths:
             - node_modules
       - run: npm run dev
+      - run:
+          # PHPからPostgreSQLへ接続するための準備
+          name: get ready for postgres
+          command: |
+            sudo apt-get update
+            sudo apt-get install libpq-dev
+            sudo docker-php-ext-install pdo_pgsql
+            dockerize -wait tcp://localhost:5432 -timeout 1m
       - run:
           name: php test
           command: vendor/bin/phpunit
