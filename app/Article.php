@@ -26,6 +26,7 @@ class Article extends Model
     public function isLikedBy(?User $user): bool
     {
         return $user
+            // 型キャストで返り値countの値が1以上の場合はtrue,未満はfalseのboolean値が返る
             ? (bool)$this->likes->where('id', $user->id)->count()
             : false;
     }
