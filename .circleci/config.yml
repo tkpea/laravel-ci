@@ -6,19 +6,19 @@ jobs:
       # DBのImageを追加
       - image: circleci/postgres:11.6-alpine
         # DBの環境変数
-        enviroment:
+        environment:
           POSTGRES_DB: larasns
           POSTGRES_USER: default
           POSTGRES_PASSWORD: secret
-      enviroment: 
-        # アプリの環境変数
-        APP_ENV: testing
-        DB_CONNECTION: pgsql
-        DB_HOST: localhost
-        DB_PORT: 5432
-        DB_DATABASE: larasns
-        DB_USERNAME: default
-        DB_PASSWORD: secret
+    environment: 
+      # アプリの環境変数
+      APP_ENV: testing
+      DB_CONNECTION: pgsql
+      DB_HOST: localhost
+      DB_PORT: 5432
+      DB_DATABASE: larasns
+      DB_USERNAME: default
+      DB_PASSWORD: secret
     steps:
       - checkout
       - run: sudo composer self-update --1
