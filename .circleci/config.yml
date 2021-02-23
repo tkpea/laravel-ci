@@ -4,11 +4,11 @@ jobs:
     docker:
       - image: circleci/php:7.3-node-browsers
     steps:
-      - checkout # GitHubからCircleCIの環境にソースコードをコピー
-      - run: sudo composer self-update --1 # PHP関連パッケージのインストールのエラー回避
-      - run: composer install -n --prefer-dist # PHP関連パッケージのインストール
-      - run: npm ci # JavaScriptの各種パッケージのインストール
-      - run: npm run dev # JavaScriptのトランスパイル
+      - checkout
+      - run: sudo composer self-update --1
+      - run: composer install -n --prefer-dist
+      - run: npm ci
+      - run: npm run dev
       - run:
-        name: php test #テストの実行
-        command: vendor/bin/phpunit
+          name: php test
+          command: vendor/bin/phpunit
